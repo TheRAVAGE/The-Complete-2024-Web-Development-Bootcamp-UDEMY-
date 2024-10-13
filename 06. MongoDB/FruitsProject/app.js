@@ -1,8 +1,10 @@
 // Using Mongoose ODM
 import mongoose from "mongoose";
-
+import env from "dotenv";
+env.config();
 // connect to mongoDB through mongoose
-mongoose.connect("mongodb://localhost:27017/fruitsDB");
+
+mongoose.connect(process.env.DB_URL); //mongoDB Atlas URL here
 
 // Create a new schema
 const fruitSchema = new mongoose.Schema({
@@ -34,13 +36,13 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 //   review: "The best fruit!",
 // });
 
-const orange = new Fruit({
-  name: "Orange",
-  rating: 4,
-  review: "Too Sour",
-});
+// const orange = new Fruit({
+//   name: "Orange",
+//   rating: 4,
+//   review: "Too Sour",
+// });
 
-await orange.save();
+// await orange.save();
 
 // const banana = new Fruit({
 //   name: "Banana",
@@ -58,18 +60,19 @@ await orange.save();
 
 //Read from DB
 const fruits = await Fruit.find();
+console.log(fruits);
 fruits.forEach(function (fruit) {
   console.log(fruit.name);
 });
 // console.log(fruits);
 
-const peopleSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  favouriteFruit: fruitSchema,
-});
+// const peopleSchema = new mongoose.Schema({
+//   name: String,
+//   age: Number,
+//   favouriteFruit: fruitSchema,
+// });
 
-const People = mongoose.model("People", peopleSchema);
+// const People = mongoose.model("People", peopleSchema);
 
 // const pineapple = new Fruit({
 //   name: "Pineapple",
@@ -87,7 +90,7 @@ const People = mongoose.model("People", peopleSchema);
 
 // await people.save();
 
-await People.updateOne({ name: "John" }, { favouriteFruit: orange });
+// await People.updateOne({ name: "John" }, { favouriteFruit: orange });
 
 // Deleting the data in DB
 // await People.deleteMany({ name: "John" });
